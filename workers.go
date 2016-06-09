@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 	"fmt"
+	"math/rand"
 )
 
 const (
@@ -36,11 +37,14 @@ func main() {
 
 	createWorkers(&idleWorkers)
 
+
 	iter:=0
 	for {
+		rand.Seed(int64(iter))
+		wait := rand.Int31n(200)
 		jobsCh <- iter
 		iter++
-		time.Sleep(20 * time.Millisecond)
+		time.Sleep(time.Duration(wait) * time.Millisecond)
 	}
 }
 
